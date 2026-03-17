@@ -42,10 +42,10 @@ app.post('/api/shorturl', function(req, res) {
   });
 });
 
-app.get('/api/shorturl/:short', function(req, res) {
+app.get('/api/shorturl/:short', async function(req, res) {
   const target = store.urls[req.params.short];
   if (!target) return res.json({ error: 'No short URL found' });
-  res.redirect(target);
+  await res.redirect(target);
 });
 
 app.listen(port, function() {
