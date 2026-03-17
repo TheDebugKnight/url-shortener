@@ -44,7 +44,7 @@ app.post('/api/shorturl', function (req, res) {
 app.get('/api/shorturl/:short', async function (req, res) {
     const target = store.urls[parseInt(req.params.short)];
     if (!target) return res.json({ error: 'No short URL found' });
-    res.redirect(301, target);
+    res.redirect(target);
 });
 
 app.get('/health', (req, res) => {
