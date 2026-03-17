@@ -16,7 +16,6 @@ app.get('/', function (req, res) {
     res.sendFile(process.cwd() + '/views/index.html');
 });
 
-// in-memory store: { counter, urls: { [short]: original } }
 const store = { counter: 1, urls: {} };
 
 app.post('/api/shorturl', function (req, res) {
@@ -45,7 +44,7 @@ app.post('/api/shorturl', function (req, res) {
 app.get('/api/shorturl/:short', async function (req, res) {
     const target = store.urls[parseInt(req.params.short)];
     if (!target) return res.json({ error: 'No short URL found' });
-    await res.redirect(target);
+    res.redirect(target);
 });
 
 app.get('/health', (req, res) => {
