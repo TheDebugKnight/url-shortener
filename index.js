@@ -52,6 +52,10 @@ app.get('/api/shorturl/:short', async function (req, res) {
     await res.redirect(target);
 });
 
+app.get('/health', (req, res) => {
+    res.send('OK');
+});
+
 app.listen(port, function () {
     console.log(`Listening on port ${ port }`);
 });
