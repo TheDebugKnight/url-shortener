@@ -36,14 +36,14 @@ app.post('/api/shorturl', function(req, res) {
   dns.lookup(parsed.hostname, function(err) {
     if (err) return res.json({ error: 'invalid url' });
 
-    const short = store.counter++;
+    const short = String(store.counter++);
     store.urls[short] = original;
-    res.json({ original_url: original, short_url: short });
+    res.json({ original_url: original, short_url: Number(short) });
   });
 });
 
 app.get('/api/shorturl/:short', function(req, res) {
-  const target = store.urls[parseInt(req.params.short)];
+  const target = store.urls[req.params.short];
   if (!target) return res.json({ error: 'No short URL found' });
   res.redirect(target);
 });
