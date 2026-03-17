@@ -34,21 +34,17 @@ app.post('/api/shorturl', function (req, res) {
     }
 
     dns.lookup(parsed.hostname, function (err) {
-        if ( err ) return res.json({ error: 'invalid url' });
+        if (err) return res.json({ error: 'invalid url' });
 
-
-        const short = String(store.counter++);
-        console.log(short);
-        store.urls[ short ] = original;
+        const short = store.counter++;
+        store.urls[short] = original;
         res.json({ original_url: original, short_url: short });
     });
 });
 
 app.get('/api/shorturl/:short', async function (req, res) {
-    console.log(req.params.short);
-    const target = store.urls[ req.params.short ];
-    if ( !target ) return res.json({ error: 'No short URL found' });
-    console.log(target);
+    const target = store.urls[parseInt(req.params.short)];
+    if (!target) return res.json({ error: 'No short URL found' });
     await res.redirect(target);
 });
 
